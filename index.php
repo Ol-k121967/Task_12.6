@@ -86,7 +86,18 @@ function getPartsFromFullname($fullname) {
 	return $FIO;
 };
 
+//getShortName
+//принимающую как аргумент строку, содержащую ФИО вида «Иванов Иван Иванович» и возвращающую строку вида «Иван И.», 
+//где сокращается фамилия и отбрасывается отчество. Для разбиения строки на составляющие используйте функцию
 
+function getShortName($fullname){
+	$shortname = "";
+	$shortname .= getPartsFromFullname($fullname)['name'];
+	$shortname .= " ";
+	$shortname .= mb_substr(getPartsFromFullname($fullname)['surname'], 0, 1);
+	$shortname .= ".";
+	return $shortname;
+};
 
 ?>
     </main>
