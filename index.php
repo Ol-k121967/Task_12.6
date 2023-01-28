@@ -133,7 +133,30 @@ function getGenderFromName($person){
 	return $printGender;
 };
 
+//getGenderDescription
+//Как аргумент в функцию передается массив, схожий по структуре с массивом $example_persons_array. Как результат функции возвращается информация в следующем виде:
+//Гендерный состав аудитории: Мужчины - 55.5% Женщины - 35.5% Не удалось определить - 10.0%
+//Используйте для решения функцию фильтрации элементов массива, функцию подсчета элементов массива, функцию getGenderFromName, округление.
+function getGenderDescription($arrayExample){
+	for ($i=0; $i < count($arrayExample); $i++) { 
+		$person = $arrayExample[$i]['fullname'];
+		$gender[$i] = getGenderFromName($person);
+		};
+	$numbersMale = array_filter($gender, function($gender) {
+   	return $gender == "мужской пол";
+   });
+	$numbersFemale = array_filter($gender, function($gender) {
+   	return $gender == "женский пол";
+   });
+	$numbersOther = array_filter($gender, function($gender) {
+   	return $gender == "неопределенный пол";
+	});
+	$resultMale = count($numbersMale)/count($arrayExample) * 100;
+	$resultFemale = count($numbersFemale)/count($arrayExample) * 100;
+	$resultOth = count($numbersOther)/count($arrayExample) * 100;
 
+	echo 'Гендерный состав аудитории: <hr>' . 'Мужчины - ' . round($resultMale, 2). '%<br>' . 'Женщины - ' . round($resultFemale, 2) . '%<br>' . 'Не удалось определить - ' . round($resultOth, 2) . '%<br>';
+};
 
 ?>
     </main>
