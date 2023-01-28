@@ -88,7 +88,7 @@ function getPartsFromFullname($fullname) {
 
 //getShortName
 //принимающую как аргумент строку, содержащую ФИО вида «Иванов Иван Иванович» и возвращающую строку вида «Иван И.», 
-//где сокращается фамилия и отбрасывается отчество. Для разбиения строки на составляющие используйте функцию
+//где сокращается фамилия и отбрасывается отчество. Для разбиения строки на составляющие используйте функцию getPartsFromFullname.
 
 function getShortName($fullname){
 	$shortname = "";
@@ -98,6 +98,42 @@ function getShortName($fullname){
 	$shortname .= ".";
 	return $shortname;
 };
+
+//getGenderFromName
+//Будем производить определение следующим образом:
+//внутри функции делим ФИО на составляющие с помощью функции getPartsFromFullname;
+//изначально «суммарный признак пола» считаем равным 0;
+//если присутствует признак мужского пола — прибавляем единицу;
+//если присутствует признак женского пола — отнимаем единицу.
+//после проверок всех признаков, если «суммарный признак пола» больше нуля — возвращаем 1 (мужской пол);
+//после проверок всех признаков, если «суммарный признак пола» меньше нуля — возвращаем -1 (женский пол);
+//после проверок всех признаков, если «суммарный признак пола» равен 0 — возвращаем 0 (неопределенный пол).
+//Признаки женского пола: отчество заканчивается на «вна»; имя заканчивается на «а»; фамилия заканчивается на «ва»;
+//Признаки мужского пола: отчество заканчивается на «ич»; имя заканчивается на «й» или «н»; фамилия заканчивается на «в».
+function getGenderFromName($person){
+	$gender = 0;
+	$fullname = getPartsFromFullname($person);
+	$searchName = mb_substr($fullname['name'], mb_strlen($fullname['name']) - 1);
+	$searchSurnameFemale = mb_substr($fullname['surname'], mb_strlen($fullname['surname']) - 2);
+	$searchSurnameMale = mb_substr($fullname['surname'], mb_strlen($fullname['surname']) - 1);
+	$searchPatronomycFemale = mb_substr($fullname['patronomyc'], mb_strlen($fullname['patronomyc']) - 3);
+	$searchPatronomycMale = mb_substr($fullname['patronomyc'], mb_strlen($fullname['patronomyc']) - 2);
+	if (($searchName == 'й' || $searchName == 'н') || ($searchSurnameMale == 'в') || ($searchPatronomycMale == 'ич')) {
+		$gender++;
+	}elseif (($searchName == 'а') || ($searchSurnameFemale == 'ва') || ($searchPatronomycFemale == 'вна')) {
+		$gender--;
+	}
+	if($gender > 0){
+		$printGender = "мужской пол";
+	}elseif ($gender < 0) {
+		$printGender = "женский пол";
+	}else {
+		$printGender = "неопределенный пол";
+	}
+	return $printGender;
+};
+
+
 
 ?>
     </main>
