@@ -73,6 +73,18 @@ function getFullnameFromParts($surname, $name, $patronomyc){
 	return $fullname;
 };
 
+//getPartsFromFullname
+// принимает как аргумент одну строку — склеенное ФИО. Возвращает как результат массив из трёх элементов с ключами ‘name’, ‘surname’ и ‘patronomyc’.
+// Пример: как аргумент принимается строка «Иванов Иван Иванович», а возвращается массив [‘surname’ => ‘Иванов’ ,‘name’ => ‘Иван’, ‘patronomyc’ => ‘Иванович’].
+function getPartsFromFullname($fullname) {
+	$personName = explode(' ', $fullname);
+	$FIO = [
+		'surname' => $personName[0],
+		'name' => $personName[1], 
+		'patronomyc' => $personName[2],
+	];
+	return $FIO;
+};
 
 
 
