@@ -60,6 +60,18 @@ $example_persons_array = [
     ],
 ];
 
+//getFullnameFromParts
+// принимает как аргумент три строки — фамилию, имя и отчество. Возвращает как результат их же, но склеенные через пробел.
+// Пример: как аргументы принимаются три строки «Иванов», «Иван» и «Иванович», а возвращается одна строка — «Иванов Иван Иванович».
+function getFullnameFromParts($surname, $name, $patronomyc){
+	$fullname = "";
+	$fullname .= $surname;
+	$fullname .= " ";
+	$fullname .= $name;
+	$fullname .= " ";
+	$fullname .= $patronomyc;
+	return $fullname;
+};
 
 
 
