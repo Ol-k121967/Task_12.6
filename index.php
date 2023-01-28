@@ -158,6 +158,66 @@ function getGenderDescription($arrayExample){
 	echo 'Гендерный состав аудитории: <hr>' . 'Мужчины - ' . round($resultMale, 2). '%<br>' . 'Женщины - ' . round($resultFemale, 2) . '%<br>' . 'Не удалось определить - ' . round($resultOth, 2) . '%<br>';
 };
 
+//getPerfectPartner
+//Как первые три аргумента в функцию передаются строки с фамилией, именем и отчеством (именно в этом порядке). При этом регистр может быть любым: ИВАНОВ ИВАН ИВАНОВИЧ, ИваНов Иван иванович.
+//Как четвертый аргумент в функцию передается массив, схожий по структуре с массивом $example_persons_array.
+//Алгоритм поиска идеальной пары:
+//приводим фамилию, имя, отчество (переданных первыми тремя аргументами) к привычному регистру;
+//склеиваем ФИО, используя функцию getFullnameFromParts;
+//определяем пол для ФИО с помощью функции getGenderFromName;
+//случайным образом выбираем любого человека в массиве;
+//проверяем с помощью getGenderFromName, что выбранное из Массива ФИО - противоположного пола, если нет, то возвращаемся к шагу 4, если да - возвращаем информацию.
+//Как результат функции возвращается информация в следующем виде:
+// Иван И. + Наталья С. = 
+//  ♡ Идеально на 64.43% ♡
+// Процент совместимости «Идеально на ...» — случайное число от 50% до 100% с точностью два знака после запятой.
+
+function getPerfectPartner($surname, $name, $patronomyc, $arrayExample){
+	$surnamePerson = mb_convert_case($surname, MB_CASE_TITLE_SIMPLE);
+	$namePerson = mb_convert_case($name, MB_CASE_TITLE_SIMPLE);
+	$patronomycPerson = mb_convert_case($patronomyc, MB_CASE_TITLE_SIMPLE); 
+	$fullname = getFullnameFromParts($surnamePerson, $namePerson, $patronomycPerson);
+	$genderPerson = getGenderFromName($fullname);
+	$numberRand = rand(0, count($arrayExample)-1);
+	$personTwo = $arrayExample[$numberRand]['fullname'];
+	$genderPersonTwo = getGenderFromName($personTwo);
+	if (($genderPerson == $genderPersonTwo) || ($genderPersonTwo == "неопределенный пол")) {
+				$genderCompare = false;
+				while ($genderCompare == false) {
+					if (($genderPerson != $genderPersonTwo) && ($genderPersonTwo != "неопределенный пол")) {
+						$genderCompare = true;
+						$randomNumber = rand(5000, 10000)/100;
+						$text = getShortName($fullname) . ' + ' . getShortName($personTwo) . ' = <br>' . "♡ Идеально на {$randomNumber}% ♡";
+					   echo $text;
+		   		};
+					$numberRand = rand(0, count($arrayExample)-1);
+					$personTwo = $arrayExample[$numberRand]['fullname'];
+					$genderPersonTwo = getGenderFromName($personTwo);
+		   	};
+		}else {
+			$randomNumber = rand(5000, 10000)/100;
+			$text = getShortName($fullname) . ' + ' . getShortName($personTwo) . ' = <br>' . "♡ Идеально на {$randomNumber}% ♡";
+		   echo $text;
+		};
+};
+
+//Проверка выполнения функционирования функций
+
+echo "Разработайте две функции: getPartsFromFullname и getFullnameFromParts <br>";
+echo "<br>Функция getFullnameFromParts<br>";
+print_r(getFullnameFromParts("Чапаев", "Василий", "Иванович") . "<br>");
+echo "<br>Функция getPartsFromFullname<br>";
+print_r(getPartsFromFullname("Чапаев Василий Иванович"));
+echo "<br><br>Функция getShortName<br>";
+print_r(getShortName("Чапаев Василий Иванович") . "<br>");
+echo "<br>Функция getGenderFromName <br>";
+print_r(getGenderFromName("Чапаев Василий Иванович") . "<br>");
+echo "<br>Функция getGenderDescription<br>";
+getGenderDescription($example_persons_array);
+echo "<br>Функция getPerfectPartner<br>";
+getPerfectPartner("ЧАПАев", "ВасИЛИЙ", "иваНОВвич", $example_persons_array);
+
+
 ?>
     </main>
     <footer class="footer">
