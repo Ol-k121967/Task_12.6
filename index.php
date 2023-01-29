@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link rel="stylesheet" href="./CSS/style.css" />
     <title>Задание 12.6</title>
 </head>
 <body>
@@ -155,7 +156,7 @@ function getGenderDescription($arrayExample){
 	$resultFemale = count($numbersFemale)/count($arrayExample) * 100;
 	$resultOth = count($numbersOther)/count($arrayExample) * 100;
 
-	echo 'Гендерный состав аудитории: <hr>' . 'Мужчины - ' . round($resultMale, 2). '%<br>' . 'Женщины - ' . round($resultFemale, 2) . '%<br>' . 'Не удалось определить - ' . round($resultOth, 2) . '%<br>';
+	echo 'Гендерный состав аудитории: <hr />' . 'Мужчины - ' . round($resultMale, 2). '%<br>' . 'Женщины - ' . round($resultFemale, 2) . '%<br>' . 'Не удалось определить - ' . round($resultOth, 2) . '%<br>';
 };
 
 //getPerfectPartner
