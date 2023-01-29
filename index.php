@@ -156,7 +156,7 @@ function getGenderDescription($arrayExample){
 	$resultFemale = count($numbersFemale)/count($arrayExample) * 100;
 	$resultOth = count($numbersOther)/count($arrayExample) * 100;
 
-	echo 'Гендерный состав аудитории: <hr />' . 'Мужчины - ' . round($resultMale, 2). '%<br>' . 'Женщины - ' . round($resultFemale, 2) . '%<br>' . 'Не удалось определить - ' . round($resultOth, 2) . '%<br>';
+	echo 'Гендерный состав аудитории: <hr>' . 'Мужчины - ' . round($resultMale, 2). '%<br>' . 'Женщины - ' . round($resultFemale, 2) . '%<br>' . 'Не удалось определить - ' . round($resultOth, 2) . '%<br>';
 };
 
 //getPerfectPartner

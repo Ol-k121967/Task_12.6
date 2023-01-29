@@ -1,6 +1,6 @@
 
-
 hr {
+    display: block;
     position: relative;
     border:none;
     border-top:3px dotted #aaa;
